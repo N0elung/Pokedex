@@ -1,18 +1,28 @@
 ---
+// Interfaz que representa un Pokémon
 interface Pokemon {
   name: string;
   url: string;
 }
 
+// Interfaz que representa una lista de Pokémon
+interface PokemonList {
+  results: Pokemon[];
+}
+
+// Realiza una solicitud a la API de Pokémon para obtener los primeros 151 Pokémon
 const response = await fetch(
   "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
 );
 const data = await response.json();
-const Pokemon = data.results;
-
-console.log(Pokemon);
+const pokemonList: PokemonList = data;
 ---
 
-<section>
-  {Pokemon.map((data) => <div>{data.name}</div>)}
+<section class="p-4">
+  <!-- Sección principal del componente Pokedex -->
+  <h1 class="font-bold text-3xl">Pokedex</h1>
+  <ul class="list-disc pl-4">
+    <!-- Itera sobre la lista de Pokémon y muestra cada nombre en un elemento de lista -->
+    {pokemonList.results.map((pokemon) => <li>{pokemon.name}</li>)}
+  </ul>
 </section>
